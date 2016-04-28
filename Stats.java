@@ -5,15 +5,19 @@ import java.util.Scanner;
 	TODO:
 	-Change from ints to doubles for the xArray.
 	-Allow the calculations without frequences.
+	-Add the median & lower quartile range.
 */
 
 public class Stats{
 
 	public static void main(String[] args) throws Exception{
 		System.out.print("Enter your x values: ");
-		int[] xArray = parseInput();
+		double[] xArray = parseInput();
 		System.out.print("Enter the frequencies: ");
-		int[] fArray = parseInput();
+
+		//Realistically frequencies can't be a decimal.
+		//But we are reusing parseInput which returns a double...
+		double[] fArray = parseInput();
 		if(fArray.length != xArray.length){
 			System.out.println("There must be the same number of x values as frequencies!");
 			throw new Exception();
@@ -27,14 +31,22 @@ public class Stats{
 		System.out.println("The Sample Standard Deviation is: " + ssd);
 	}
 
-	private static double calcStandardDev(int[] xArray, int[] fArray){
+	private static double calcMedian(double[] xArray, double[] fArray){
+		return 0;
+	}
+
+	private static double calcLowerQuartile(double[] xArray, double[] fArray){
+			return 0;
+	}
+
+	private static double calcStandardDev(double[] xArray, double[] fArray){
 		double sd = calcSDNumerator(xArray, fArray);
 		sd = sd / sumFrequencies(fArray);
 		sd = Math.sqrt(sd);
 		return sd;
 	}
 
-	private static double calcSampleStandardDev(int[] xArray, int[] fArray){
+	private static double calcSampleStandardDev(double[] xArray, double[] fArray){
 		double ssd = calcSDNumerator(xArray, fArray);
 		ssd = ssd / (sumFrequencies(fArray) - 1);
 		ssd = Math.sqrt(ssd);
@@ -46,7 +58,7 @@ public class Stats{
 		This has been extracted as it is used as (at least part of)
 		the denominator on both Standard Deviation and Sample Standard Deviation.
 	*/
-	private static double sumFrequencies(int[] fArray){
+	private static double sumFrequencies(double[] fArray){
 		double sum = 0;
 		for (int i = 0; i < fArray.length; i++){
 			sum += fArray[i];
@@ -59,7 +71,7 @@ public class Stats{
 		This part has been extracted because it is used for both
 		Standard Deviation & Standard Deviation.
 	*/
-	private static double calcSDNumerator(int[] xArray, int[] fArray){
+	private static double calcSDNumerator(double[] xArray, double[] fArray){
 		double numerator = 0;
 		//Get the mean to be used for calculating the differences of each x value.
 		double mean = calcMean(xArray, fArray);
@@ -75,7 +87,7 @@ public class Stats{
 		return numerator;
 	}
 
-	private static double calcMean(int[] xArray, int[] fArray){
+	private static double calcMean(double[] xArray, double[] fArray){
 		double mean = 0;
 		for(int i = 0; i < xArray.length; i++){
 			double weighting = xArray[i] * fArray[i];
@@ -89,18 +101,18 @@ public class Stats{
 		Takes a list of numbers on the command line and returns them as an array
 		of integers.
 	*/
-	private static int[] parseInput(){
+	private static double[] parseInput(){
 		Scanner reader = new Scanner(System.in);
 		String xValues = reader.nextLine();
 		String[] stringArray = xValues.split(" ");
-		int[] xArray = new int[stringArray.length];
+		double[] array = new double[stringArray.length];
 		for (int i = 0; i < stringArray.length; i++) {
 			try {
-		        	xArray[i] = Integer.parseInt(stringArray[i]);
+		        	array[i] = Double.parseDouble(stringArray[i]);
 			} catch (NumberFormatException nfe) {
 				System.out.println(stringArray[i] +  " Is not a valid number.");
 			};
 		}
-		return xArray;
+		return array;
 	}
 }
