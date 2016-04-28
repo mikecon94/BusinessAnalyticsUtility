@@ -1,6 +1,14 @@
 import java.util.Scanner;
 
+/*
+	A class to help do some calculations.
+	TODO:
+	-Change from ints to doubles for the xArray.
+	-Allow the calculations without frequences.	
+*/
+
 public class Stats{
+
 	public static void main(String[] args) throws Exception{
 		System.out.print("Enter your x values: ");
 		int[] xArray = parseInput();
@@ -23,9 +31,12 @@ public class Stats{
 		sd = Math.sqrt(sd);
 		return sd;
 	}
-	
+
 	private static double calcSampleStandardDev(int[] xArray, int[] fArray){
-		return 0;
+		double ssd = calcSDNumerator(xArray, fArray);
+		ssd = ssd / (sumFrequencies(fArray) - 1);
+		ssd = Math.sqrt(ssd);
+		return ssd;
 	}
 
 	private static double sumFrequencies(int[] fArray){
@@ -49,8 +60,6 @@ public class Stats{
 		return numerator;
 	}
 
-
-	
 	private static double calcMean(int[] xArray, int[] fArray){
 		double mean = 0;
 		for(int i = 0; i < xArray.length; i++){
