@@ -4,7 +4,7 @@ import java.util.Scanner;
 	A class to help do some calculations.
 	TODO:
 	-Change from ints to doubles for the xArray.
-	-Allow the calculations without frequences.	
+	-Allow the calculations without frequences.
 */
 
 public class Stats{
@@ -21,8 +21,10 @@ public class Stats{
 
 		double mean = calcMean(xArray, fArray);
 		double sd = calcStandardDev(xArray, fArray);
+		double ssd = calcSampleStandardDev(xArray, fArray);
 		System.out.println("The mean is: " + mean);
 		System.out.println("The Standard Deviation is: " + sd);
+		System.out.println("The Sample Standard Deviation is: " + ssd);
 	}
 
 	private static double calcStandardDev(int[] xArray, int[] fArray){
@@ -39,6 +41,11 @@ public class Stats{
 		return ssd;
 	}
 
+	/*
+		Sums up the totals of the frequencies.
+		This has been extracted as it is used as (at least part of)
+		the denominator on both Standard Deviation and Sample Standard Deviation.
+	*/
 	private static double sumFrequencies(int[] fArray){
 		double sum = 0;
 		for (int i = 0; i < fArray.length; i++){
@@ -47,11 +54,19 @@ public class Stats{
 		return sum;
 	}
 
-	//Utility method for calculating the numerator
-	//of the Standard Deviation calculation.
+	/*Utility method for calculating the numerator of the Standard Deviation
+	 	calculation.
+		This part has been extracted because it is used for both
+		Standard Deviation & Standard Deviation.
+	*/
 	private static double calcSDNumerator(int[] xArray, int[] fArray){
 		double numerator = 0;
+		//Get the mean to be used for calculating the differences of each x value.
 		double mean = calcMean(xArray, fArray);
+
+		//For each x value we work out the difference between x and the mean
+		//We square each of these values and multiple by the frequency
+		// and add them up.
 		for (int i = 0; i < xArray.length; i++){
 			double diff = xArray[i] - mean;
 			double diffSqrd = diff * diff;
@@ -70,6 +85,10 @@ public class Stats{
 		return mean;
 	}
 
+	/*
+		Takes a list of numbers on the command line and returns them as an array
+		of integers.
+	*/
 	private static int[] parseInput(){
 		Scanner reader = new Scanner(System.in);
 		String xValues = reader.nextLine();
