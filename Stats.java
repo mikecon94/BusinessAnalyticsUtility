@@ -1,5 +1,5 @@
 import java.util.Scanner;
-
+import java.util.Arrays;
 /*
 	A class to help do some calculations.
 	TODO:
@@ -13,11 +13,20 @@ public class Stats{
 	public static void main(String[] args) throws Exception{
 		System.out.print("Enter your x values: ");
 		double[] xArray = parseInput();
+		if(xArray == null){
+			System.out.println("Must enter x values");
+			throw new Exception();
+		}
 		System.out.print("Enter the frequencies: ");
 
 		//Realistically frequencies can't be a decimal.
 		//But we are reusing parseInput which returns a double...
 		double[] fArray = parseInput();
+		if(fArray == null){
+			fArray = new double[xArray.length];
+			Arrays.fill(fArray, 1);
+		}
+
 		if(fArray.length != xArray.length){
 			System.out.println("There must be the same number of x values as frequencies!");
 			throw new Exception();
@@ -103,8 +112,11 @@ public class Stats{
 	*/
 	private static double[] parseInput(){
 		Scanner reader = new Scanner(System.in);
-		String xValues = reader.nextLine();
-		String[] stringArray = xValues.split(" ");
+		String values = reader.nextLine();
+		if (values.equals("")){
+			return null;
+		}
+		String[] stringArray = values.split(" ");
 		double[] array = new double[stringArray.length];
 		for (int i = 0; i < stringArray.length; i++) {
 			try {
