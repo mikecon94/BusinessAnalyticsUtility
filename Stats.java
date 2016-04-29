@@ -4,7 +4,6 @@ import java.util.Arrays;
 	A class to help do some calculations.
 	TODO:
 	-Change from ints to doubles for the xArray.
-	-Allow the calculations without frequences.
 	-Add the median & lower quartile range.
 */
 
