@@ -17,8 +17,8 @@ public class Stats{
 			System.out.println("Must enter x values");
 			throw new Exception();
 		}
-		System.out.print("Enter the frequencies: ");
 
+		System.out.print("Enter your f values: ");
 		//Realistically frequencies can't be a decimal.
 		//But we are reusing parseInput which returns a double...
 		double[] fArray = parseInput();
@@ -31,10 +31,12 @@ public class Stats{
 			System.out.println("There must be the same number of x values as frequencies!");
 			throw new Exception();
 		}
-
+		
+		double range = calcRange(xArray);
 		double mean = calcMean(xArray, fArray);
 		double sd = calcStandardDev(xArray, fArray);
 		double ssd = calcSampleStandardDev(xArray, fArray);
+		System.out.println("The range is: " + range);
 		System.out.println("The mean is: " + mean);
 		System.out.println("The Standard Deviation is: " + sd);
 		System.out.println("The Sample Standard Deviation is: " + ssd);
@@ -46,6 +48,21 @@ public class Stats{
 
 	private static double calcLowerQuartile(double[] xArray, double[] fArray){
 			return 0;
+	}
+
+	private static double calcRange(double[] xArray){
+		double min = Double.MAX_VALUE;
+		double max = Double.MIN_VALUE;
+		for (int i = 0; i < xArray.length; i++){
+			if(xArray[i] > max){
+				max = xArray[i];
+			}
+
+			if(xArray[i] < min){
+				min = xArray[i];
+			}
+		}
+		return max - min;
 	}
 
 	private static double calcStandardDev(double[] xArray, double[] fArray){
